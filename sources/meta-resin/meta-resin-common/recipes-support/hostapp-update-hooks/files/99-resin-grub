@@ -1,0 +1,27 @@
+#!/bin/sh
+
+#
+# Script which configures the grub.cfg to use an updated root index
+#
+
+set -o errexit
+
+DURING_UPDATE=${DURING_UPDATE:-0}
+
+if [ "$DURING_UPDATE" = "1" ]; then
+	SYSROOT="/mnt/sysroot/inactive"
+else
+	SYSROOT="/mnt/sysroot/active"
+fi
+
+new_part=$(findmnt --noheadings --canonicalize --output SOURCE $SYSROOT)
+new_part_label=$(blkid "$new_part" | awk '{print $2}' | cut -d'"' -f 2)
+
+printf "[INFO] Switching root partition to %s..." "$new_part_label..."
+grub_cfg=$(find /mnt/boot/ -name grub.cfg)
+sed "s/resin-root./"$new_part_label"/" "$grub_cfg" > "$grub_cfg".new
+
+sync -f $(dirname "$grub_cfg")
+mv "$grub_cfg".new "$grub_cfg"
+sync -f $(dirname "$grub_cfg")
+printf " done.\n"

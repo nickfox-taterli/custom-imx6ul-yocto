@@ -1,0 +1,26 @@
+#!/bin/sh
+
+#
+# Script which configures the resinOS_uEnv,txt to use an updated root index
+#
+
+set -o errexit
+
+DURING_UPDATE=${DURING_UPDATE:-0}
+
+if [ "$DURING_UPDATE" = "1" ]; then
+	SYSROOT="/mnt/sysroot/inactive"
+else
+	SYSROOT="/mnt/sysroot/active"
+fi
+
+new_part=$(findmnt --noheadings --canonicalize --output SOURCE $SYSROOT)
+blockdev=$(basename "$new_part")
+new_part_idx=$(cat "/sys/class/block/$blockdev/partition")
+
+printf "[INFO] Switching uboot root partition index to %s..." "$new_part_idx..."
+echo "resin_root_part=$new_part_idx" > /mnt/boot/resinOS_uEnv.txt.new
+sync -f /mnt/boot
+mv /mnt/boot/resinOS_uEnv.txt.new /mnt/boot/resinOS_uEnv.txt
+sync -f /mnt/boot
+printf " done.\n"
