@@ -1,0 +1,20 @@
+# FSL-RELEASE-BSP 移植
+
+------
+
+### 1. 依赖
+
+ - OS:必须是Ubuntu 16.04 x64 LTS,其他系统不兼容.
+ - RAM:至少2GB
+ - DISK:至少60G
+ - CPU:越大越好
+
+### 2. 构建
+
+```shell
+bitbake core-image-minimal <= 全部
+bitbake u-boot <= U-Boot
+bitbake linux-custom <= 只构建内核
+```
+
+目前只是勉强启动起来,依然很多错误,可能包含硬件设计错误,边移植边记录吧.
