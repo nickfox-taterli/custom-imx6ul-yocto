@@ -12,6 +12,10 @@
 ### 2. 构建
 
 ```shell
+source fsl-setup-release.sh <= 在非root下创建环境
+```
+
+```shell
 bitbake core-image-minimal <= 全部
 bitbake u-boot <= U-Boot
 bitbake linux-custom <= 只构建内核
