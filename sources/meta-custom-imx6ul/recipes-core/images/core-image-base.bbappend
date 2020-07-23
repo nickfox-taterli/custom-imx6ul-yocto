@@ -12,4 +12,5 @@ IMAGE_INSTALL += "imx-kobs \
     e2fsprogs-mke2fs \
     e2fsprogs-resize2fs \
     mtd-utils-ubifs \
+    u-boot-custom \
     rc-local"

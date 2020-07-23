@@ -3,7 +3,10 @@ IMAGE_INSTALL += "imx-kobs \
     gzip \
     mtd-utils \
     mtd-utils-ubifs \
-    rpm \
     rc-local \
     udev-extraconf \
+    u-boot-custom \
+    python3 \
+    python3-pip \
+    python3-setuptools \
     udev-rules-imx "
