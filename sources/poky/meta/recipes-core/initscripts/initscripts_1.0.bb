@@ -9,14 +9,12 @@ INHIBIT_DEFAULT_DEPS = "1"
 
 SRC_URI = "file://functions \
            file://halt \
-           file://umountfs \
            file://devpts.sh \
            file://devpts \
            file://hostname.sh \
            file://mountall.sh \
            file://banner.sh \
            file://bootmisc.sh \
-           file://mountnfs.sh \
            file://reboot \
            file://checkfs.sh \
            file://single \
@@ -24,7 +22,6 @@ SRC_URI = "file://functions \
            file://urandom \
            file://rmnologin.sh \
            file://checkroot.sh \
-           file://umountnfs.sh \
            file://sysfs.sh \
            file://populate-volatile.sh \
            file://read-only-rootfs-hook.sh \
@@ -87,45 +84,45 @@ do_install () {
 	install -m 0755    ${WORKDIR}/halt		${D}${sysconfdir}/init.d
 	install -m 0755    ${WORKDIR}/hostname.sh	${D}${sysconfdir}/init.d
 	install -m 0755    ${WORKDIR}/mountall.sh	${D}${sysconfdir}/init.d
-	install -m 0755    ${WORKDIR}/mountnfs.sh	${D}${sysconfdir}/init.d
+	# install -m 0755    ${WORKDIR}/mountnfs.sh	${D}${sysconfdir}/init.d
 	install -m 0755    ${WORKDIR}/reboot		${D}${sysconfdir}/init.d
 	install -m 0755    ${WORKDIR}/rmnologin.sh	${D}${sysconfdir}/init.d
 	install -m 0755    ${WORKDIR}/sendsigs		${D}${sysconfdir}/init.d
 	install -m 0755    ${WORKDIR}/single		${D}${sysconfdir}/init.d
-	install -m 0755    ${WORKDIR}/umountnfs.sh	${D}${sysconfdir}/init.d
+	# install -m 0755    ${WORKDIR}/umountnfs.sh	${D}${sysconfdir}/init.d
 	install -m 0755    ${WORKDIR}/urandom		${D}${sysconfdir}/init.d
 	sed -i ${D}${sysconfdir}/init.d/urandom -e 's,/var/,${localstatedir}/,g;s,/etc/,${sysconfdir}/,g'
 	install -m 0755    ${WORKDIR}/devpts.sh	${D}${sysconfdir}/init.d
 	install -m 0755    ${WORKDIR}/devpts		${D}${sysconfdir}/default
 	install -m 0755    ${WORKDIR}/sysfs.sh		${D}${sysconfdir}/init.d
 	install -m 0755    ${WORKDIR}/populate-volatile.sh ${D}${sysconfdir}/init.d
-	install -m 0755    ${WORKDIR}/read-only-rootfs-hook.sh ${D}${sysconfdir}/init.d
+	# install -m 0755    ${WORKDIR}/read-only-rootfs-hook.sh ${D}${sysconfdir}/init.d
 	install -m 0755    ${WORKDIR}/save-rtc.sh	${D}${sysconfdir}/init.d
 	install -m 0644    ${WORKDIR}/volatiles		${D}${sysconfdir}/default/volatiles/00_core
 	install -m 0755    ${WORKDIR}/dmesg.sh		${D}${sysconfdir}/init.d
 	install -m 0644    ${WORKDIR}/logrotate-dmesg.conf ${D}${sysconfdir}/
 
-	if [ "${TARGET_ARCH}" = "arm" ]; then
-		install -m 0755 ${WORKDIR}/alignment.sh	${D}${sysconfdir}/init.d
-	fi
+	# if [ "${TARGET_ARCH}" = "arm" ]; then
+	# 	install -m 0755 ${WORKDIR}/alignment.sh	${D}${sysconfdir}/init.d
+	# fi
 
-	if ${@bb.utils.contains('DISTRO_FEATURES','selinux','true','false',d)}; then
-		install -d ${D}/${base_sbindir}
-		install -m 0755 ${WORKDIR}/sushell ${D}/${base_sbindir}
-	fi
+	# if ${@bb.utils.contains('DISTRO_FEATURES','selinux','true','false',d)}; then
+	# 	install -d ${D}/${base_sbindir}
+	# 	install -m 0755 ${WORKDIR}/sushell ${D}/${base_sbindir}
+	# fi
 #
 # Install device dependent scripts
 #
 	install -m 0755 ${WORKDIR}/banner.sh	${D}${sysconfdir}/init.d/banner.sh
-	install -m 0755 ${WORKDIR}/umountfs	${D}${sysconfdir}/init.d/umountfs
+	# install -m 0755 ${WORKDIR}/umountfs	${D}${sysconfdir}/init.d/umountfs
 #
 # Create runlevel links
 #
 	update-rc.d -r ${D} rmnologin.sh start 99 2 3 4 5 .
 	update-rc.d -r ${D} sendsigs start 20 0 6 .
 	update-rc.d -r ${D} urandom start 38 S 0 6 .
-	update-rc.d -r ${D} umountnfs.sh start 31 0 1 6 .
-	update-rc.d -r ${D} umountfs start 40 0 6 .
+	# update-rc.d -r ${D} umountnfs.sh start 31 0 1 6 .
+	# update-rc.d -r ${D} umountfs start 40 0 6 .
 	update-rc.d -r ${D} reboot start 90 6 .
 	update-rc.d -r ${D} halt start 90 0 .
 	update-rc.d -r ${D} save-rtc.sh start 25 0 6 .
@@ -133,15 +130,15 @@ do_install () {
 	update-rc.d -r ${D} checkroot.sh start 06 S .
 	update-rc.d -r ${D} mountall.sh start 03 S .
 	update-rc.d -r ${D} hostname.sh start 39 S .
-	update-rc.d -r ${D} mountnfs.sh start 15 2 3 4 5 .
+	# update-rc.d -r ${D} mountnfs.sh start 15 2 3 4 5 .
 	update-rc.d -r ${D} bootmisc.sh start 55 S .
 	update-rc.d -r ${D} sysfs.sh start 02 S .
 	update-rc.d -r ${D} populate-volatile.sh start 37 S .
-	update-rc.d -r ${D} read-only-rootfs-hook.sh start 29 S .
+	# update-rc.d -r ${D} read-only-rootfs-hook.sh start 29 S .
 	update-rc.d -r ${D} devpts.sh start 38 S .
-	if [ "${TARGET_ARCH}" = "arm" ]; then
-	        update-rc.d -r ${D} alignment.sh start 06 S .
-	fi
+	# if [ "${TARGET_ARCH}" = "arm" ]; then
+	#         update-rc.d -r ${D} alignment.sh start 06 S .
+	# fi
 	# We wish to have /var/log ready at this stage so execute this after
 	# populate-volatile.sh
 	update-rc.d -r ${D} dmesg.sh start 38 S .

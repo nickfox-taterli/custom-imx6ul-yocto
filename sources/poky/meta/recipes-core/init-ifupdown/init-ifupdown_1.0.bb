@@ -13,8 +13,7 @@ INITSCRIPT_PARAMS = "start 01 2 3 4 5 . stop 80 0 6 1 ."
 
 SRC_URI = "file://copyright \
            file://init \
-           file://interfaces \
-           file://nfsroot"
+           file://interfaces"
 
 S = "${WORKDIR}"
 
@@ -26,7 +25,6 @@ do_install () {
 			${D}${sysconfdir}/network/if-post-down.d
 	install -m 0755 ${WORKDIR}/init ${D}${sysconfdir}/init.d/networking
 	install -m 0644 ${WORKDIR}/interfaces ${D}${sysconfdir}/network/interfaces
-	install -m 0755 ${WORKDIR}/nfsroot ${D}${sysconfdir}/network/if-pre-up.d
 }
 
 do_install_append_qemuall () {

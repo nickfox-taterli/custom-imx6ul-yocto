@@ -78,4 +78,8 @@ then
 		test -x /etc/init.d/hwclock.sh && /etc/init.d/hwclock.sh stop
 	fi
 fi
+
+ifup eth0 > /dev/null 2>&1 &
+ifup eth1 > /dev/null 2>&1 &
+
 : exit 0
