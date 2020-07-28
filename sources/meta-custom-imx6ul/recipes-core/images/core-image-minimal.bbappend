@@ -6,7 +6,6 @@ IMAGE_INSTALL += "imx-kobs \
     rc-local \
     udev-extraconf \
     u-boot-custom \
-    python3 \
-    python3-pip \
-    python3-setuptools \
+    openssh \
+    openssl \
     udev-rules-imx "
