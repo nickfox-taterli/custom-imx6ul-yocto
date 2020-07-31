@@ -93,11 +93,11 @@ do_install () {
 	install -m 0644    ${WORKDIR}/rcS-default	${D}${sysconfdir}/default/rcS
 	install -m 0755    ${WORKDIR}/rc		${D}${sysconfdir}/init.d
 	install -m 0755    ${WORKDIR}/rcS		${D}${sysconfdir}/init.d
-	install -m 0755    ${WORKDIR}/bootlogd.init     ${D}${sysconfdir}/init.d/bootlogd
-	ln -sf bootlogd ${D}${sysconfdir}/init.d/stop-bootlogd
+	# install -m 0755    ${WORKDIR}/bootlogd.init     ${D}${sysconfdir}/init.d/bootlogd
+	# ln -sf bootlogd ${D}${sysconfdir}/init.d/stop-bootlogd
 
-	update-rc.d -r ${D} bootlogd start 07 S .
-	update-rc.d -r ${D} stop-bootlogd start 99 2 3 4 5 .
+	# update-rc.d -r ${D} bootlogd start 07 S .
+	# update-rc.d -r ${D} stop-bootlogd start 99 2 3 4 5 .
 
 	install -d ${D}${sysconfdir}/default/volatiles
 	install -m 0644 ${WORKDIR}/01_bootlogd ${D}${sysconfdir}/default/volatiles

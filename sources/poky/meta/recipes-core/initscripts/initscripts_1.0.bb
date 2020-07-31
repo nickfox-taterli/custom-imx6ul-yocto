@@ -13,23 +13,16 @@ SRC_URI = "file://functions \
            file://devpts \
            file://hostname.sh \
            file://mountall.sh \
-           file://banner.sh \
            file://bootmisc.sh \
+		   file://checkroot.sh \
            file://reboot \
-           file://checkfs.sh \
            file://single \
            file://sendsigs \
-           file://urandom \
-           file://rmnologin.sh \
-           file://checkroot.sh \
            file://sysfs.sh \
            file://populate-volatile.sh \
-           file://read-only-rootfs-hook.sh \
            file://volatiles \
            file://save-rtc.sh \
            file://GPLv2.patch \
-           file://dmesg.sh \
-           file://logrotate-dmesg.conf \
            ${@bb.utils.contains('DISTRO_FEATURES','selinux','file://sushell','',d)} \
 "
 
@@ -76,7 +69,7 @@ do_install () {
 	install -d ${D}${sysconfdir}/default
 	install -d ${D}${sysconfdir}/default/volatiles
 	# Holds state information pertaining to urandom
-	install -d ${D}${localstatedir}/lib/urandom
+	# install -d ${D}${localstatedir}/lib/urandom
 
 	install -m 0644    ${WORKDIR}/functions		${D}${sysconfdir}/init.d
 	install -m 0755    ${WORKDIR}/bootmisc.sh	${D}${sysconfdir}/init.d
@@ -86,12 +79,12 @@ do_install () {
 	install -m 0755    ${WORKDIR}/mountall.sh	${D}${sysconfdir}/init.d
 	# install -m 0755    ${WORKDIR}/mountnfs.sh	${D}${sysconfdir}/init.d
 	install -m 0755    ${WORKDIR}/reboot		${D}${sysconfdir}/init.d
-	install -m 0755    ${WORKDIR}/rmnologin.sh	${D}${sysconfdir}/init.d
+	# install -m 0755    ${WORKDIR}/rmnologin.sh	${D}${sysconfdir}/init.d
 	install -m 0755    ${WORKDIR}/sendsigs		${D}${sysconfdir}/init.d
 	install -m 0755    ${WORKDIR}/single		${D}${sysconfdir}/init.d
 	# install -m 0755    ${WORKDIR}/umountnfs.sh	${D}${sysconfdir}/init.d
-	install -m 0755    ${WORKDIR}/urandom		${D}${sysconfdir}/init.d
-	sed -i ${D}${sysconfdir}/init.d/urandom -e 's,/var/,${localstatedir}/,g;s,/etc/,${sysconfdir}/,g'
+	# install -m 0755    ${WORKDIR}/urandom		${D}${sysconfdir}/init.d
+	# sed -i ${D}${sysconfdir}/init.d/urandom -e 's,/var/,${localstatedir}/,g;s,/etc/,${sysconfdir}/,g'
 	install -m 0755    ${WORKDIR}/devpts.sh	${D}${sysconfdir}/init.d
 	install -m 0755    ${WORKDIR}/devpts		${D}${sysconfdir}/default
 	install -m 0755    ${WORKDIR}/sysfs.sh		${D}${sysconfdir}/init.d
@@ -99,8 +92,8 @@ do_install () {
 	# install -m 0755    ${WORKDIR}/read-only-rootfs-hook.sh ${D}${sysconfdir}/init.d
 	install -m 0755    ${WORKDIR}/save-rtc.sh	${D}${sysconfdir}/init.d
 	install -m 0644    ${WORKDIR}/volatiles		${D}${sysconfdir}/default/volatiles/00_core
-	install -m 0755    ${WORKDIR}/dmesg.sh		${D}${sysconfdir}/init.d
-	install -m 0644    ${WORKDIR}/logrotate-dmesg.conf ${D}${sysconfdir}/
+	# install -m 0755    ${WORKDIR}/dmesg.sh		${D}${sysconfdir}/init.d
+	# install -m 0644    ${WORKDIR}/logrotate-dmesg.conf ${D}${sysconfdir}/
 
 	# if [ "${TARGET_ARCH}" = "arm" ]; then
 	# 	install -m 0755 ${WORKDIR}/alignment.sh	${D}${sysconfdir}/init.d
@@ -113,20 +106,20 @@ do_install () {
 #
 # Install device dependent scripts
 #
-	install -m 0755 ${WORKDIR}/banner.sh	${D}${sysconfdir}/init.d/banner.sh
+	# install -m 0755 ${WORKDIR}/banner.sh	${D}${sysconfdir}/init.d/banner.sh
 	# install -m 0755 ${WORKDIR}/umountfs	${D}${sysconfdir}/init.d/umountfs
 #
 # Create runlevel links
 #
-	update-rc.d -r ${D} rmnologin.sh start 99 2 3 4 5 .
+	# update-rc.d -r ${D} rmnologin.sh start 99 2 3 4 5 .
 	update-rc.d -r ${D} sendsigs start 20 0 6 .
-	update-rc.d -r ${D} urandom start 38 S 0 6 .
+	# update-rc.d -r ${D} urandom start 38 S 0 6 .
 	# update-rc.d -r ${D} umountnfs.sh start 31 0 1 6 .
 	# update-rc.d -r ${D} umountfs start 40 0 6 .
 	update-rc.d -r ${D} reboot start 90 6 .
 	update-rc.d -r ${D} halt start 90 0 .
 	update-rc.d -r ${D} save-rtc.sh start 25 0 6 .
-	update-rc.d -r ${D} banner.sh start 02 S .
+	# update-rc.d -r ${D} banner.sh start 02 S .
 	update-rc.d -r ${D} checkroot.sh start 06 S .
 	update-rc.d -r ${D} mountall.sh start 03 S .
 	update-rc.d -r ${D} hostname.sh start 39 S .
@@ -141,24 +134,16 @@ do_install () {
 	# fi
 	# We wish to have /var/log ready at this stage so execute this after
 	# populate-volatile.sh
-	update-rc.d -r ${D} dmesg.sh start 38 S .
+	# update-rc.d -r ${D} dmesg.sh start 38 S .
 }
 
 MASKED_SCRIPTS = " \
-  banner \
   bootmisc \
-  checkfs \
-  checkroot \
   devpts \
-  dmesg \
   hostname \
   mountall \
-  mountnfs \
   populate-volatile \
-  read-only-rootfs-hook \
-  rmnologin \
-  sysfs \
-  urandom"
+  sysfs"
 
 pkg_postinst_${PN} () {
 	if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then

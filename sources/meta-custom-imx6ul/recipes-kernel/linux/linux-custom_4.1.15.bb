@@ -14,7 +14,11 @@ LOCALVERSION = "-1.2.0"
 # SRCREV = "2345cf99f3cba35af24e67ce21e5c7d141c029ed"
 SRCREV = "${AUTOREV}"
 SRCBRANCH = "master"
-SRC_URI = "git://github.com/nickfox-taterli/custom-imx6ul-kernel.git;branch=${SRCBRANCH} \
+# SRC_URI = "git://github.com/nickfox-taterli/custom-imx6ul-kernel.git;branch=${SRCBRANCH} \
+#            file://defconfig \ 
+#           "
+
+SRC_URI = "git:////home/taterli/custom-imx6ul-kernel/;protocol=file \
            file://defconfig \ 
           "
 
