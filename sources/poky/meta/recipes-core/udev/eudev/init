@@ -2,7 +2,7 @@
 
 ### BEGIN INIT INFO
 # Provides:          udev
-# Required-Start:    mountvirtfs
+# Required-Start:    mountvirtfs checkroot
 # Required-Stop:     
 # Default-Start:     S
 # Default-Stop:

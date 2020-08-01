@@ -11,7 +11,6 @@ SRC_URI = "file://functions \
            file://halt \
            file://devpts.sh \
            file://devpts \
-           file://mountall.sh \
            file://bootmisc.sh \
 		   file://checkroot.sh \
            file://reboot \
@@ -74,7 +73,7 @@ do_install () {
 	install -m 0755    ${WORKDIR}/checkroot.sh	${D}${sysconfdir}/init.d
 	install -m 0755    ${WORKDIR}/halt		${D}${sysconfdir}/init.d
 	# install -m 0755    ${WORKDIR}/hostname.sh	${D}${sysconfdir}/init.d
-	install -m 0755    ${WORKDIR}/mountall.sh	${D}${sysconfdir}/init.d
+	# install -m 0755    ${WORKDIR}/mountall.sh	${D}${sysconfdir}/init.d
 	# install -m 0755    ${WORKDIR}/mountnfs.sh	${D}${sysconfdir}/init.d
 	install -m 0755    ${WORKDIR}/reboot		${D}${sysconfdir}/init.d
 	# install -m 0755    ${WORKDIR}/rmnologin.sh	${D}${sysconfdir}/init.d
@@ -119,7 +118,7 @@ do_install () {
 	update-rc.d -r ${D} save-rtc.sh start 25 0 6 .
 	# update-rc.d -r ${D} banner.sh start 02 S .
 	update-rc.d -r ${D} checkroot.sh start 06 S .
-	update-rc.d -r ${D} mountall.sh start 03 S .
+	# update-rc.d -r ${D} mountall.sh start 03 S .
 	# update-rc.d -r ${D} hostname.sh start 39 S .
 	# update-rc.d -r ${D} mountnfs.sh start 15 2 3 4 5 .
 	update-rc.d -r ${D} bootmisc.sh start 55 S .
@@ -138,8 +137,6 @@ do_install () {
 MASKED_SCRIPTS = " \
   bootmisc \
   devpts \
-  mountall \
-  populate-volatile \
   sysfs"
 
 pkg_postinst_${PN} () {

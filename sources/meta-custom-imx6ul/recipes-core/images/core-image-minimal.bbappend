@@ -9,3 +9,6 @@ IMAGE_INSTALL += "imx-kobs \
     openssh \
     openssl \
     udev-rules-imx "
+
+IMAGE_FEATURES_remove += "package-management rpm"
+EXTRA_IMAGE_FEATURES_remove += "package-management rpm"
