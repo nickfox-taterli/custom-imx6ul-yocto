@@ -12,7 +12,6 @@ SRC_URI = "file://functions \
            file://devpts.sh \
            file://devpts \
            file://bootmisc.sh \
-		   file://checkroot.sh \
            file://reboot \
            file://single \
            file://sendsigs \
@@ -70,7 +69,7 @@ do_install () {
 
 	install -m 0644    ${WORKDIR}/functions		${D}${sysconfdir}/init.d
 	install -m 0755    ${WORKDIR}/bootmisc.sh	${D}${sysconfdir}/init.d
-	install -m 0755    ${WORKDIR}/checkroot.sh	${D}${sysconfdir}/init.d
+	# install -m 0755    ${WORKDIR}/checkroot.sh	${D}${sysconfdir}/init.d
 	install -m 0755    ${WORKDIR}/halt		${D}${sysconfdir}/init.d
 	# install -m 0755    ${WORKDIR}/hostname.sh	${D}${sysconfdir}/init.d
 	# install -m 0755    ${WORKDIR}/mountall.sh	${D}${sysconfdir}/init.d
@@ -117,7 +116,7 @@ do_install () {
 	update-rc.d -r ${D} halt start 90 0 .
 	update-rc.d -r ${D} save-rtc.sh start 25 0 6 .
 	# update-rc.d -r ${D} banner.sh start 02 S .
-	update-rc.d -r ${D} checkroot.sh start 06 S .
+	# update-rc.d -r ${D} checkroot.sh start 06 S .
 	# update-rc.d -r ${D} mountall.sh start 03 S .
 	# update-rc.d -r ${D} hostname.sh start 39 S .
 	# update-rc.d -r ${D} mountnfs.sh start 15 2 3 4 5 .
@@ -155,4 +154,4 @@ pkg_postinst_${PN} () {
     fi
 }
 
-CONFFILES_${PN} += "${sysconfdir}/init.d/checkroot.sh"
+# CONFFILES_${PN} += "${sysconfdir}/init.d/checkroot.sh"

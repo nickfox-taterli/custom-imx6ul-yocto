@@ -64,6 +64,7 @@ case "$1" in
     # the automount rule for udev needs /tmp directory available, as /tmp is a symlink
     # to /var/tmp which in turn is a symlink to /var/volatile/tmp, we need to make sure
     # /var/volatile/tmp directory to be available.
+    mount -n -o remount,rw /
     mkdir -m 1777 -p /var/volatile/tmp
 
     # Cache handling.

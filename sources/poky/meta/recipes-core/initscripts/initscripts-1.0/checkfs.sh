@@ -1,7 +1,7 @@
 #!/bin/sh
 ### BEGIN INIT INFO
 # Provides:          checkfs
-# Required-Start:    checkroot
+# Required-Start:    udev
 # Required-Stop:     
 # Default-Start:     S
 # Default-Stop:
