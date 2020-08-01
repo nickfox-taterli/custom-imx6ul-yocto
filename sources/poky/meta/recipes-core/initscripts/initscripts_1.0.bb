@@ -11,7 +11,6 @@ SRC_URI = "file://functions \
            file://halt \
            file://devpts.sh \
            file://devpts \
-           file://hostname.sh \
            file://mountall.sh \
            file://bootmisc.sh \
 		   file://checkroot.sh \
@@ -19,7 +18,6 @@ SRC_URI = "file://functions \
            file://single \
            file://sendsigs \
            file://sysfs.sh \
-           file://populate-volatile.sh \
            file://volatiles \
            file://save-rtc.sh \
            file://GPLv2.patch \
@@ -75,7 +73,7 @@ do_install () {
 	install -m 0755    ${WORKDIR}/bootmisc.sh	${D}${sysconfdir}/init.d
 	install -m 0755    ${WORKDIR}/checkroot.sh	${D}${sysconfdir}/init.d
 	install -m 0755    ${WORKDIR}/halt		${D}${sysconfdir}/init.d
-	install -m 0755    ${WORKDIR}/hostname.sh	${D}${sysconfdir}/init.d
+	# install -m 0755    ${WORKDIR}/hostname.sh	${D}${sysconfdir}/init.d
 	install -m 0755    ${WORKDIR}/mountall.sh	${D}${sysconfdir}/init.d
 	# install -m 0755    ${WORKDIR}/mountnfs.sh	${D}${sysconfdir}/init.d
 	install -m 0755    ${WORKDIR}/reboot		${D}${sysconfdir}/init.d
@@ -88,7 +86,7 @@ do_install () {
 	install -m 0755    ${WORKDIR}/devpts.sh	${D}${sysconfdir}/init.d
 	install -m 0755    ${WORKDIR}/devpts		${D}${sysconfdir}/default
 	install -m 0755    ${WORKDIR}/sysfs.sh		${D}${sysconfdir}/init.d
-	install -m 0755    ${WORKDIR}/populate-volatile.sh ${D}${sysconfdir}/init.d
+	# install -m 0755    ${WORKDIR}/populate-volatile.sh ${D}${sysconfdir}/init.d
 	# install -m 0755    ${WORKDIR}/read-only-rootfs-hook.sh ${D}${sysconfdir}/init.d
 	install -m 0755    ${WORKDIR}/save-rtc.sh	${D}${sysconfdir}/init.d
 	install -m 0644    ${WORKDIR}/volatiles		${D}${sysconfdir}/default/volatiles/00_core
@@ -122,11 +120,11 @@ do_install () {
 	# update-rc.d -r ${D} banner.sh start 02 S .
 	update-rc.d -r ${D} checkroot.sh start 06 S .
 	update-rc.d -r ${D} mountall.sh start 03 S .
-	update-rc.d -r ${D} hostname.sh start 39 S .
+	# update-rc.d -r ${D} hostname.sh start 39 S .
 	# update-rc.d -r ${D} mountnfs.sh start 15 2 3 4 5 .
 	update-rc.d -r ${D} bootmisc.sh start 55 S .
 	update-rc.d -r ${D} sysfs.sh start 02 S .
-	update-rc.d -r ${D} populate-volatile.sh start 37 S .
+	# update-rc.d -r ${D} populate-volatile.sh start 37 S .
 	# update-rc.d -r ${D} read-only-rootfs-hook.sh start 29 S .
 	update-rc.d -r ${D} devpts.sh start 38 S .
 	# if [ "${TARGET_ARCH}" = "arm" ]; then
@@ -140,7 +138,6 @@ do_install () {
 MASKED_SCRIPTS = " \
   bootmisc \
   devpts \
-  hostname \
   mountall \
   populate-volatile \
   sysfs"

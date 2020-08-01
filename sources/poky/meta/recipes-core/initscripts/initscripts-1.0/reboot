@@ -11,5 +11,4 @@
 
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
 
-echo -n "Rebooting... "
 reboot SED_HALTARGS

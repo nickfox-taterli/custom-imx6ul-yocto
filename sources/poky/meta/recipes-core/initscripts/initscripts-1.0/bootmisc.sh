@@ -30,6 +30,8 @@ then
 	fi
 fi
 
+hostname `cat /etc/hostname`
+
 ifup eth0 > /dev/null 2>&1 &
 ifup eth1 > /dev/null 2>&1 &
 
