@@ -13,7 +13,6 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin
 
 # Kill all processes.
 killall5 -15
-sleep 5
 killall5 -9
 
 : exit 0
