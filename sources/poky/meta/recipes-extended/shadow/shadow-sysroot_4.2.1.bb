@@ -3,7 +3,7 @@ HOMEPAGE = "http://pkg-shadow.alioth.debian.org"
 BUGTRACKER = "https://alioth.debian.org/tracker/?group_id=30580"
 SECTION = "base utils"
 LICENSE = "BSD | Artistic-1.0"
-LIC_FILES_CHKSUM = "file://login.defs_shadow-sysroot;md5=25e2f2de4dfc8f966ac5cdfce45cd7d5"
+LIC_FILES_CHKSUM = "file://login.defs_shadow-sysroot;md5=958808b19a392e63862883e46358d0f7"
 
 DEPENDS = "base-passwd"
 

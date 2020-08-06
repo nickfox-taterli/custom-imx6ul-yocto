@@ -29,7 +29,7 @@ LOG_OK_LOGINS		no
 #
 # Enable logging and display of /var/log/lastlog login time info.
 #
-#LASTLOG_ENAB		yes
+LASTLOG_ENAB		no
 
 #
 # Enable checking and display of mailbox status upon login.

@@ -6,19 +6,26 @@ IMAGE_INSTALL += "imx-kobs \
     rc-local \
     udev-extraconf \
     u-boot-custom \
-    openssh \
+    dropbear \
     openssl \
     udev-rules-imx "
 
-IMAGE_FEATURES_remove += "package-management"
+IMAGE_FEATURES_remove += "package-management debug-tweaks"
 
 remove_alternative_files() {
-   rm -rf ${IMAGE_ROOTFS}/usr/lib/opkg
-   rm -rf ${IMAGE_ROOTFS}/etc/init.d/run-postinsts
-   rm -rf ${IMAGE_ROOTFS}/etc/rpm
-   rm -rf ${IMAGE_ROOTFS}/etc/rpm-postinsts
+  # 删除包管理的内容
+  rm -rf ${IMAGE_ROOTFS}/usr/lib/opkg
+  rm -rf ${IMAGE_ROOTFS}/etc/init.d/run-postinsts
+  rm -rf ${IMAGE_ROOTFS}/etc/rpm
+  rm -rf ${IMAGE_ROOTFS}/etc/rpm-postinsts
 }
 
 ROOTFS_POSTPROCESS_COMMAND_append = " \
-  remove_alternative_files; \
+  remove_alternative_files;\
 "
+
+inherit extrausers
+EXTRA_USERS_PARAMS = " \
+  usermod -P xxoo root; \
+"
+        
