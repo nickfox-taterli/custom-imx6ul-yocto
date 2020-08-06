@@ -10,7 +10,6 @@ def setUpModule():
     if "package_rpm" != oeRuntimeTest.tc.d.getVar("PACKAGE_CLASSES", True).split()[0]:
             skipModule("rpm module skipped: target doesn't have rpm as primary package manager")
 
-
 class RpmBasicTest(oeRuntimeTest):
 
     @testcase(960)
